@@ -12,6 +12,14 @@ interface Props {
 export function FeedbackPanel({ snippet, chosen, onNext, isLast }: Props) {
   const isCorrect = chosen === snippet.correctAnswer;
   const meta = CATEGORY_META[snippet.category];
+  const correctIsFilter = snippet.correctAnswer === 'filter';
+  const headline = isCorrect
+    ? correctIsFilter
+      ? 'יפה. זיהית את הסיכון.'
+      : 'יפה. זיהית שזה בטוח לשלוח.'
+    : correctIsFilter
+      ? 'זו הייתה דליפה.'
+      : 'סינון יתר — לא היה כאן סיכון.';
 
   return (
     <aside
@@ -32,9 +40,7 @@ export function FeedbackPanel({ snippet, chosen, onNext, isLast }: Props) {
           <div className="text-xs text-text-dim font-medium mb-1">
             {isCorrect ? 'תשובה נכונה' : 'תשובה שגויה'}
           </div>
-          <h3 className="text-xl font-bold leading-tight">
-            {isCorrect ? 'יפה. זיהית את הסיכון.' : 'זה היה דליפה.'}
-          </h3>
+          <h3 className="text-xl font-bold leading-tight">{headline}</h3>
         </div>
       </div>
 

@@ -15,7 +15,7 @@ export function IntroScreen({ onStart, hasProgress, onContinue }: Props) {
       <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] mb-6">
         כמה נתונים את{' '}
         <span className="bg-gradient-to-l from-accent to-blue bg-clip-text text-transparent">
-          דולפת
+          מדליפה
         </span>{' '}
         ל-AI?
       </h1>

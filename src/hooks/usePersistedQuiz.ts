@@ -12,7 +12,8 @@ function loadState(): QuizState {
       typeof parsed !== 'object' ||
       parsed === null ||
       !('phase' in parsed) ||
-      !Array.isArray(parsed.answers)
+      !Array.isArray(parsed.answers) ||
+      !Array.isArray((parsed as QuizState).order)
     ) {
       return initialState;
     }

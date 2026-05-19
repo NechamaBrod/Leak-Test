@@ -9,11 +9,18 @@ export default function App() {
   const [state, dispatch] = usePersistedQuiz();
   const total = snippets.length;
 
-  const handleStart = () => dispatch({ type: 'START' });
+  const snippetById = (id: number | undefined) =>
+    id == null ? undefined : snippets.find((s) => s.id === id);
+  const currentSnippet =
+    state.order.length > 0
+      ? snippetById(state.order[state.currentIndex])
+      : snippets[state.currentIndex];
+
+  const handleStart = () =>
+    dispatch({ type: 'START', snippetIds: snippets.map((s) => s.id) });
   const handleAnswer = (choice: Choice) => {
-    const snippet = snippets[state.currentIndex];
-    if (!snippet) return;
-    dispatch({ type: 'ANSWER', snippet, chosen: choice });
+    if (!currentSnippet) return;
+    dispatch({ type: 'ANSWER', snippet: currentSnippet, chosen: choice });
   };
   const handleNext = () => dispatch({ type: 'NEXT', total });
   const handleRestart = () => dispatch({ type: 'RESET' });
@@ -30,9 +37,9 @@ export default function App() {
           <IntroScreen onStart={handleStart} hasProgress={hasProgress} />
         )}
 
-        {state.phase === 'question' && (
+        {state.phase === 'question' && currentSnippet && (
           <QuestionScreen
-            snippet={snippets[state.currentIndex]}
+            snippet={currentSnippet}
             index={state.currentIndex}
             total={total}
             chosen={null}
@@ -41,14 +48,14 @@ export default function App() {
           />
         )}
 
-        {state.phase === 'feedback' && (
+        {state.phase === 'feedback' && currentSnippet && (
           <QuestionScreen
-            snippet={snippets[state.currentIndex]}
+            snippet={currentSnippet}
             index={state.currentIndex}
             total={total}
             chosen={
               state.answers.find(
-                (a) => a.snippetId === snippets[state.currentIndex].id,
+                (a) => a.snippetId === currentSnippet.id,
               )?.chosen ?? null
             }
             onAnswer={handleAnswer}

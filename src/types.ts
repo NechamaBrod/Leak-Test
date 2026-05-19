@@ -45,6 +45,8 @@ export interface QuizState {
   phase: Phase;
   currentIndex: number;
   answers: AnswerRecord[];
+  /** סדר אקראי של מזהי קטעים — נוצר ב-START ונשמר ב-localStorage */
+  order: number[];
 }
 
 export interface CategoryScore {

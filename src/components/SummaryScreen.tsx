@@ -127,7 +127,7 @@ function getVerdict(pct: number): { title: string; subtitle: string; color: stri
   if (pct >= 40) {
     return {
       title: 'סיכון גבוה',
-      subtitle: 'את היית דולפת נתונים. רגע לפני שאת ממשיכה — שווה לראות את השיעור.',
+      subtitle: 'את היית מדליפה נתונים. רגע לפני שאת ממשיכה — שווה לראות את השיעור.',
       color: 'text-warning',
     };
   }
